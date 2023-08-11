@@ -9,7 +9,9 @@ defmodule CashierExample.Factory.ProductFactory do
         %Product{
           code: sequence(:product_code, &"productcode#{&1}"),
           name: sequence(:product_name, &"productname#{&1}"),
-          price: Money.new!(:EUR, "10,00")
+          price: Money.new!(:EUR, "10,00"),
+          deal_type: nil,
+          deal_metadata: nil
         }
         |> merge_attributes(attrs)
         |> evaluate_lazy_attributes()

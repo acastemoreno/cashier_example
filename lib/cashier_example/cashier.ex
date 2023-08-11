@@ -17,7 +17,7 @@ defmodule CashierExample.Cashier do
     |> process_basket_summary()
   end
 
-  def process_basket(_), do: {:error, "bad input format"}
+  def process_basket(_), do: {:error, :bad_input}
 
   @spec get_list_product_codes(String.t()) :: list(product_code())
   defp get_list_product_codes(basket) do
@@ -72,6 +72,13 @@ defmodule CashierExample.Cashier do
   end
 
   @spec calculate_total_amount(map()) :: process_result()
+  defp calculate_total_amount(%{related: [], unrelated: unrelated}) do
+    %{
+      total_amount: Money.zero(:EUR),
+      missing_products: unrelated
+    }
+  end
+
   defp calculate_total_amount(%{related: related, unrelated: unrelated}) do
     {:ok, total_amount} =
       related
@@ -81,7 +88,7 @@ defmodule CashierExample.Cashier do
       |> Money.sum()
 
     %{
-      total_amount: total_amount,
+      total_amount: Money.round(total_amount, currency_digits: :cash),
       missing_products: unrelated
     }
   end
