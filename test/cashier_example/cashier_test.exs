@@ -1,4 +1,4 @@
-defmodule CashierExampleTest.CashierTest do
+defmodule CashierExample.CashierTest do
   use CashierExample.RepoCase, async: true
   import Money.Sigil
 
