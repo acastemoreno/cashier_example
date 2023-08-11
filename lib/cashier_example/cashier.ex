@@ -7,7 +7,18 @@ defmodule CashierExample.Cashier do
 
   @type product_code :: String.t()
   @type process_result :: %{total_amount: Money.t(), missing_products: list(product_code())}
+
   @typep code_summary :: %{required(product_code()) => non_neg_integer()}
+  @typep related_item :: %{count: non_neg_integer(), product: Product.t()}
+  @type in_progress_availability_reducer :: %{
+          related: list(related_item()),
+          unrelated: list(product_code()),
+          available_products: list(Product.t())
+        }
+  @type finished_availability_reducer :: %{
+          related: list(related_item()),
+          unrelated: list(product_code())
+        }
 
   @spec process_basket(String.t()) :: process_result() | {:error, String.t()}
   def process_basket(basket) when is_bitstring(basket) and basket != "" do
@@ -54,7 +65,10 @@ defmodule CashierExample.Cashier do
     |> Map.delete(:available_products)
   end
 
-  @spec split_base_on_availability_reducer({product_code(), non_neg_integer()}, map()) :: map()
+  @spec split_base_on_availability_reducer(
+          {product_code(), non_neg_integer()},
+          in_progress_availability_reducer()
+        ) :: finished_availability_reducer()
   defp split_base_on_availability_reducer({code, count}, acc) do
     case Enum.find_index(acc.available_products, &(&1.code == code)) do
       nil ->
@@ -71,7 +85,7 @@ defmodule CashierExample.Cashier do
     end
   end
 
-  @spec calculate_total_amount(map()) :: process_result()
+  @spec calculate_total_amount(finished_availability_reducer()) :: process_result()
   defp calculate_total_amount(%{related: [], unrelated: unrelated}) do
     %{
       total_amount: Money.zero(:EUR),
