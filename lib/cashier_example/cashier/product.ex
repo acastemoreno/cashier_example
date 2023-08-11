@@ -6,6 +6,12 @@ defmodule CashierExample.Cashier.Product do
 
   alias Money.Ecto.Composite.Type, as: MoneyType
 
+  @type t :: %__MODULE__{
+    code: String.t(),
+    name: String.t(),
+    price: Money.t(),
+  }
+
   schema "products" do
     field(:code, :string)
     field(:name, :string)
