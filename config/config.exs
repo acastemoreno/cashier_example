@@ -1,7 +1,8 @@
 import Config
 
 config :ex_cldr,
-  json_library: Jason
+  json_library: Jason,
+  default_backend: CashierExample.Cldr
 
 config :cashier_example, CashierExample.Repo,
   username: "postgres",

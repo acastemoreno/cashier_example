@@ -10,6 +10,7 @@ defmodule CashierExample.RepoCase do
       import Ecto.Query
       import CashierExample.RepoCase
 
+      import CashierExample.Factory
       # and any other stuff
     end
   end
