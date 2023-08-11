@@ -1,21 +1,11 @@
 # CashierExample
 
-**TODO: Add description**
+Practice Elixir project.
 
-## Installation
+Calculate the basket total amount. Each product can have a prestablish deal and fully configurable.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cashier_example` to your list of dependencies in `mix.exs`:
+## Usage
 
-```elixir
-def deps do
-  [
-    {:cashier_example, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/cashier_example>.
-
+- Use `mix deps.get` to download dependencies
+- Edit `config/config.exs` file for your local Postgres connection.
+- Use `mix test` to enjoy run tests
